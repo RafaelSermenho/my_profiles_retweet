@@ -20,26 +20,17 @@ var server = app.listen(process.env.PORT, "0.0.0.0", function () {
     console.log('Web server started at http://%s:%s', host, port);
 });
 
-function tweet(data, hora, volumeDescoberto, volumeSantaMaria) {
-    console.log("tweet");
-    text = data + " - " + hora + " - Volume Descoberto: " + volumeDescoberto + hashtags;
-	
-    Twitter.post('statuses/update', {status: text}, function (error, tweet, response) {
-        if (error) {
-            console.log(error);
-        }
-    });
 
-    text = data + " - " + hora + " - Volume Santa Maria: " + volumeSantaMaria + hashtags;
-	
-    Twitter.post('statuses/update', {status: text}, function (error, tweet, response) {
-        if (error) {
-            console.log(error);
-        }
-    });
-	
-};
+var users = {
+	nivelBarragemDf: '850538373001486338',
+	galaktikos_bot: '851628825213587456'};
 
+var tweetStream = Twitter.stream('statuses/filter', { follow: '850538373001486338, 851628825213587456'});
+
+// on tweet
+tweetStream.on('tweet', function (tweet) {
+    console.log(tweet);
+});
 
 
 setInterval(function () {
