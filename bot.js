@@ -30,6 +30,11 @@ var tweetStream = Twitter.stream('statuses/filter', { follow: '85053837300148633
 // on tweet
 tweetStream.on('tweet', function (tweet) {
     console.log(tweet);
+	Twitter.post('statuses/retweet', {id: tweet.id_str}, function (error, tweet, response) {
+        if (error) {
+            console.log(error);
+        }
+    });
 });
 
 
